@@ -24,7 +24,7 @@ public class NumberText extends JTextField implements EventListener {
         this.setVisible(true);
         this.setFont(new Font("Arial", PLAIN, 20));
         this.setHorizontalAlignment(CENTER);
-       // this.setDocument(new NumberTextLimit());
+        // this.setDocument(new NumberTextLimit());
         this.setEnabled(!space.isFixed());
         if (space.isFixed()) {
             this.setText(space.getActual().toString());
@@ -52,21 +52,16 @@ public class NumberText extends JTextField implements EventListener {
                     NumberText.this.setForeground(Color.BLACK); // Cor padrão se vazio
                     return;
                 }
-                try {
-                    int enteredValue = Integer.parseInt(getText());
 
-                    // Validação da cor
-                    if (enteredValue == space.getExpected()) {
-                        NumberText.this.setForeground(Color.GREEN); // Número correto
-                    } else {
-                        NumberText.this.setForeground(Color.RED);   // Número incorreto
-                    }
+                int enteredValue = Integer.parseInt(getText());
 
-                    space.setActual(Integer.parseInt(getText()));
-                } catch (NumberFormatException e) {
-                    System.out.println("Entrada inválida detectada!");
-                    NumberText.this.setForeground(Color.BLACK); // Evita erro se o jogador inserir algo inválido
+                // Validação da cor
+                if (enteredValue == space.getExpected()) {
+                    NumberText.this.setForeground(Color.GREEN); // Número correto
+                } else {
+                    NumberText.this.setForeground(Color.RED);   // Número incorreto
                 }
+                space.setActual(Integer.parseInt(getText()));
             }
 
         });
