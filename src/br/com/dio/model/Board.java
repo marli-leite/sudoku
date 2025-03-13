@@ -3,9 +3,10 @@ package br.com.dio.model;
 import java.util.Collection;
 import java.util.List;
 
-import static br.com.dio.model.GameStatusEnum.COMPLETE;
-import static br.com.dio.model.GameStatusEnum.INCOMPLETE;
-import static br.com.dio.model.GameStatusEnum.NON_STARTED;
+import br.com.dio.model.GameStatusEnum;
+
+
+import static br.com.dio.model.GameStatusEnum.*;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 

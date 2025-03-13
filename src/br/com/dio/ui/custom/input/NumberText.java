@@ -7,8 +7,7 @@ import br.com.dio.service.EventListener;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 
 import static br.com.dio.service.EventEnum.CLEAR_SPACE;
 import static java.awt.Font.PLAIN;
@@ -25,9 +24,9 @@ public class NumberText extends JTextField implements EventListener {
         this.setVisible(true);
         this.setFont(new Font("Arial", PLAIN, 20));
         this.setHorizontalAlignment(CENTER);
-        this.setDocument(new NumberTextLimit());
+       // this.setDocument(new NumberTextLimit());
         this.setEnabled(!space.isFixed());
-        if (space.isFixed()){
+        if (space.isFixed()) {
             this.setText(space.getActual().toString());
         }
         this.getDocument().addDocumentListener(new DocumentListener() {
@@ -47,12 +46,27 @@ public class NumberText extends JTextField implements EventListener {
                 changeSpace();
             }
 
-            private void changeSpace(){
-                if (getText().isEmpty()){
+            private void changeSpace() {
+                if (getText().isEmpty()) {
                     space.clearSpace();
+                    NumberText.this.setForeground(Color.BLACK); // Cor padrão se vazio
                     return;
                 }
-                space.setActual(Integer.parseInt(getText()));
+                try {
+                    int enteredValue = Integer.parseInt(getText());
+
+                    // Validação da cor
+                    if (enteredValue == space.getExpected()) {
+                        NumberText.this.setForeground(Color.GREEN); // Número correto
+                    } else {
+                        NumberText.this.setForeground(Color.RED);   // Número incorreto
+                    }
+
+                    space.setActual(Integer.parseInt(getText()));
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrada inválida detectada!");
+                    NumberText.this.setForeground(Color.BLACK); // Evita erro se o jogador inserir algo inválido
+                }
             }
 
         });
@@ -60,7 +74,7 @@ public class NumberText extends JTextField implements EventListener {
 
     @Override
     public void update(final EventEnum eventType) {
-        if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())){
+        if (eventType.equals(CLEAR_SPACE) && (this.isEnabled())) {
             this.setText("");
         }
     }
